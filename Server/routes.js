@@ -1,11 +1,11 @@
 const router = require("express").Router();
 
-const authController = require("./controllers/authController");
-const userController = require("./controllers/userController");
-const projectController = require("./controllers/projectController");
-const hoursController = require("./controllers/hoursController");
-const invitesController = require("./controllers/invitesController");
-const reportsController = require("./controllers/reportsController");
+const authController = require("./src/controllers/authController");
+const userController = require("./src/controllers/userController");
+const projectController = require("./src/controllers/projectController");
+const hoursController = require("./src/controllers/hoursController");
+const invitesController = require("./src/controllers/invitesController");
+const reportsController = require("./src/controllers/reportsController");
 
 router.use("/", authController);
 router.use("/hours", hoursController);
