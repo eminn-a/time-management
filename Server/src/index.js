@@ -11,18 +11,19 @@ const initializeAdmin = require("./utils/initializeAdmin");
 const generalErrorHandlerMiddleware = require("./middlewares/generalErrorHandlerMiddleware");
 const routes = require("../routes");
 
+// const corsOrigin =
+//   process.env.ENV === "DEV"
+//     ? process.env.DEV_ADDRESS.split(",")
+//     : "http://localhost:5173";
 const corsOrigin =
-  process.env.ENV === "DEV"
-    ? process.env.DEV_ADDRESS.split(",")
-    : "http://localhost:5173";
-
-console.log(process.env.PROD_ADDRESS);
+  "https://time-management-el08lbbxv-emins-projects-82371a91.vercel.app/?vercelToolbarCode=qUFPdvw6VLHP0KJ";
+console.log(corsOrigin);
 const app = express();
 app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-    origin: [process.env.PROD_ADDRESS],
+    origin: [corsOrigin],
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
     allowedHeaders: ["Content-Type", "x-Authorization", "X-Requested-With"],
