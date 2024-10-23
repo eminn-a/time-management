@@ -16,6 +16,7 @@ const corsOrigin =
     ? process.env.DEV_ADDRESS.split(",")
     : "http://localhost:5173";
 
+console.log(process.env.PROD_ADDRESS);
 const app = express();
 app.use(express.json());
 app.use(cookieParser());
