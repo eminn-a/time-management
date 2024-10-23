@@ -18,8 +18,6 @@ const routes = require("../routes");
 const corsOrigin = "https://time-management-123321.web.app";
 console.log(corsOrigin);
 const app = express();
-app.use(express.json());
-app.use(cookieParser());
 app.use(
   cors({
     origin: corsOrigin,
@@ -28,6 +26,8 @@ app.use(
     allowedHeaders: ["Content-Type", "x-Authorization", "X-Requested-With"],
   })
 );
+app.use(express.json());
+app.use(cookieParser());
 
 app.use(routes);
 app.use(generalErrorHandlerMiddleware);
