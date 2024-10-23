@@ -16,8 +16,6 @@ import mainLogo from '@/assets/timeManagementLogo.png';
 import useFetchEmailValidation from '@/reactQuery/hooks/useFetchEmailValidation';
 import GearSvg from '@/UI/design/GearSvg';
 import Loader from '@/UI/Loader';
-import { urlKeys } from '@/reactQuery/constants';
-import useFetchUserEmailValidation from '@/reactQuery/hooks/useFetchUserEmailValidation';
 
 import httpServices from '@/services/httpServices';
 
@@ -77,7 +75,7 @@ export default function GoogleCreateAcc() {
             const userEmail = decodedToken.email || '';
 
             post(`/users/validate_email/${userEmail}`)
-                .then(res => {
+                .then((res) => {
                     const isExisting = res.isExisting;
 
                     if (isExisting) {
@@ -94,7 +92,7 @@ export default function GoogleCreateAcc() {
                     setValue('firstName', decodedToken.given_name || '');
                     setValue('lastName', decodedToken.family_name || '');
                 })
-                .catch(err => {
+                .catch((err) => {
                     console.error('Error checking email:', err);
                     toast.error('Something went wrong. Please try again.');
                 });

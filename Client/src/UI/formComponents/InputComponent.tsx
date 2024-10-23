@@ -19,6 +19,7 @@ type InputComponentProps<T extends FieldValues> = {
     shouldShowIcons?: boolean;
     triggerError?: boolean;
     showLabel?: boolean;
+    labelName?: string;
 } & ComponentPropsWithoutRef<'input'>;
 
 export default function InputComponent<T extends FieldValues>({
@@ -35,8 +36,18 @@ export default function InputComponent<T extends FieldValues>({
     labelName,
     triggerError = true,
     showLabel = true,
+    onBlur, // Destructure onBlur here
     ...props
 }: InputComponentProps<T>) {
+    const handleBlur = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        // Call the trigger for validation
+        trigger(field);
+        // If an onBlur was passed via props, call it
+        if (onBlur) {
+            (onBlur as React.FocusEventHandler<HTMLInputElement | HTMLTextAreaElement>)(e);
+        }
+    };
+
     return (
         <div className='mt-3 w-full'>
             {showLabel && (
@@ -51,31 +62,31 @@ export default function InputComponent<T extends FieldValues>({
                 {type === 'textarea' ? (
                     <textarea
                         id={field}
-                        className={`mb-5 block h-24 w-full rounded-xl border border-customBlue placeholder-custom ${
+                        className={`mb-5 block w-full rounded-xl border ${
                             error ? 'border-customRed' : 'border-customBlue'
-                        } p-2.5 text-sm text-customDarkBlue outline-none focus:border-customBlue focus:ring-customBlue`}
+                        } p-2.5 text-sm text-customDarkBlue placeholder-customBlue outline-none focus:border-customBlue focus:ring-customBlue`}
                         placeholder={capitalizeAndFormat(field)}
                         {...register(field)}
-                        onBlur={() => trigger(field)}
-                        {...props}
+                        onBlur={handleBlur}
+                        {...(props as ComponentPropsWithoutRef<'textarea'>)}
                     />
                 ) : (
                     <input
                         type={type}
                         id={field}
-                        className={`block w-full  rounded-xl border border-customBlue ${
+                        className={`block w-full rounded-xl border ${
                             error ? 'border-customRed' : 'border-customBlue'
                         } ${(password || field === 'email') && shouldShowIcons === true ? 'pl-10' : ''} p-2.5 text-sm text-customDarkBlue outline-none focus:border-customBlue focus:ring-customBlue`}
                         placeholder={capitalizeAndFormat(field)}
                         {...register(field)}
-                        onBlur={() => trigger(field)}
+                        onBlur={handleBlur}
                         {...props}
                     />
                 )}
                 {password && (
                     <span
                         onClick={toggleVisibility}
-                        className='absolute right-4 top-1/2 -translate-y-1/2 transform text-gray-500 dark:text-gray-400'
+                        className='absolute right-4 top-1/2 -translate-y-1/2 transform cursor-pointer text-gray-500 dark:text-gray-400'
                     >
                         {isVisible ? (
                             <AiFillEye className='h-6 w-6' />
