@@ -15,7 +15,7 @@ const routes = require("../routes");
 //   process.env.ENV === "DEV"
 //     ? process.env.DEV_ADDRESS.split(",")
 //     : "http://localhost:5173";
-const corsOrigin = "https://time-management-123321.web.app/";
+const corsOrigin = "https://time-management-123321.web.app";
 console.log(corsOrigin);
 const app = express();
 app.use(express.json());
